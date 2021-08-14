@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ToDoList.Models.ToDoItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>To Do List</h1>
+
+<h3>
+    <a asp-action="Create">Create new item</a>
+</h3>
+@if (Model.Count() > 0)
+{
+    <h2>To do:</h2>
+    @foreach (var item in Model)
+    {
+         <div class="toDoItem">
+              <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+              <p>@Html.DisplayFor(modelItem => item.Description)</p>
+              <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+              <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+              <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+         </div>
+    }
+}
+else
+{
+    <p>Nothing to do</p>
+}
