@@ -1,0 +1,7 @@
+﻿ **/bin/*
+**/obj/*
+**/Logs/*
+.vs/
+.vscode/
+*.log
+*.suo
