@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Login</h1>
+    <br />
+    <button class="btn btn-primary" onclick="login()">Login</button>
+
+    <script>
+        function login() {
+            Cookies.set(config.sessionIdCookieName, 'haha test cookie');
+        }
+    </script>
+</div>

@@ -21,14 +21,16 @@ namespace Accounts.Controllers
 
         public IActionResult Index()
         {
+
             bool loggedIn = AccountHelpers.IsLoggedIn(Request.Cookies);
-            if (loggedIn) return View();
-            else return RedirectToAction("Login");
+            return View(loggedIn);
         }
 
         public IActionResult App()
         {
-            return View();
+            bool loggedIn = AccountHelpers.IsLoggedIn(Request.Cookies);
+            if (loggedIn) return View();
+            else return RedirectToAction("Login");
         }
 
         public IActionResult Login()

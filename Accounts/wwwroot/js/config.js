@@ -1,0 +1,3 @@
+﻿const config = {
+    sessionIdCookieName: 'AccountsSessionId'
+};

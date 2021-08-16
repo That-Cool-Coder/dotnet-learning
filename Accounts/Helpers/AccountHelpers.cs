@@ -9,13 +9,13 @@ namespace Accounts.Helpers
 {
     public class AccountHelpers
     {
-        public bool IsLoggedIn(IRequestCookieCollection cookies)
+        public static bool IsLoggedIn(IRequestCookieCollection cookies)
         {
             string sessionIdValue;
             bool sessionIdExists = cookies.TryGetValue(SessionId.CookieName, out sessionIdValue);
             if (!sessionIdExists) return false;
             else if (false /* session id is valid */ ) ;
-            else return false;
+            else return true;
         }
     }
 }
