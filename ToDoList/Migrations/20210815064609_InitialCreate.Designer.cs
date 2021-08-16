@@ -9,7 +9,7 @@ using ToDoList.Data;
 namespace ToDoList.Migrations
 {
     [DbContext(typeof(ToDoListContext))]
-    [Migration("20210814080829_InitialCreate")]
+    [Migration("20210815064609_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
