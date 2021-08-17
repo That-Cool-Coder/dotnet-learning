@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace Accounts.Models
 {
-
     public class SessionId
     {
         public const string CookieName = "AccountsSessionId";
