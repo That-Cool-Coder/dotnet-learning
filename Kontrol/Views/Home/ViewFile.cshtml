@@ -1,0 +1,28 @@
+﻿@model Kontrol.ViewModels.ViewFile;
+@{
+    ViewData["Title"] = "View File";
+}
+
+<div class="text-center">
+    <h1 class="display-4">View File</h1>
+    <form>
+        <div class="form-group">
+            <input placeholder="Enter filename" name="filename" />
+            <input type="submit" value="Go!" class="btn btn-primary" />
+        </div>
+    </form>
+    @if (Model.FilePath.Length > 0)
+    {
+        @if (Model.FileFound)
+        {
+            <h2>@Model.FilePath:</h2>
+            <br />
+            <p class="raw-text">@Model.FileContent</p>
+        }
+        else
+        {
+            <h2>@Model.FilePath was not found</h2>
+        }
+
+    }
+</div>
