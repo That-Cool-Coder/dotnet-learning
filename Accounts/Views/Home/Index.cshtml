@@ -1,10 +1,12 @@
-﻿@{
+﻿@model Accounts.TemplateDataClasses.Base;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Accounts test</h1>
-    @if (Model)
+    @if (Model.loggedIn)
     {
         <p>If you can see this then you are logged in</p>
     }
