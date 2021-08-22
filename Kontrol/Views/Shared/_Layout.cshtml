@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Kontrol</title>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -21,9 +22,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewFile">View file</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -31,13 +29,19 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <form>
+                <div class="form-group text-right">
+                    <input class="pathInput" placeholder="Enter path" name="path" />
+                    <input type="submit" asp-action="ViewLocation" value="Go" class="btn btn-primary" />
+                </div>
+            </form>
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - Kontrol
+            &copy; @DateTime.Now.Year - Kontrol
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

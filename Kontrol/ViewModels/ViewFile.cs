@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace Kontrol.ViewModels
 {
-    public class ViewFile
+    public struct ViewFile
     {
-        public bool FileFound { get; set; }
-        public string FilePath { get; set; }
-        public string FileContent { get; set; }
+        public bool fileFound;
+        public bool fileAccessible;
+        public string filePath;
+        public string fileContent;
     }
 }
