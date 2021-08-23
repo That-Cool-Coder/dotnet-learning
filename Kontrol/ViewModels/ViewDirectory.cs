@@ -7,8 +7,7 @@ namespace Kontrol.ViewModels
 {
     public class ViewDirectory
     {
-        public bool directoryFound;
-        public bool directoryAccessible;
+        public Helpers.FileReadState directoryReadState;
         public string directoryPath;
         public List<string> childDirectories = new();
         public List<string> childFiles = new();

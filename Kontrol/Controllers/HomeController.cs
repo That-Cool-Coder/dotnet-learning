@@ -55,21 +55,18 @@ namespace Kontrol.Controllers
         {
             var viewModel = new Kontrol.ViewModels.ViewFile();
             viewModel.filePath = filePath;
-            viewModel.fileFound = false;
-            viewModel.fileAccessible = false;
+            viewModel.fileReadState = Helpers.FileReadState.NOT_FOUND;
             try
             {
-                viewModel.fileContent = System.IO.File.ReadAllText(filePath);
-                viewModel.fileFound = true;
-                viewModel.fileAccessible = true;
+                viewModel.fileType = Helpers.FileHelpers.FileTypeFromExtension(filePath);
+                viewModel.fileContent = System.IO.File.ReadAllBytes(filePath);
+                viewModel.fileReadState = Helpers.FileReadState.READ;
             }
-            catch (System.IO.FileNotFoundException)
-            {
-                viewModel.fileFound = false;
-            }
+            catch (System.IO.FileNotFoundException) { }
+            catch (System.IO.DirectoryNotFoundException) { }
             catch (System.UnauthorizedAccessException)
             {
-                viewModel.fileAccessible = false;
+                viewModel.fileReadState = Helpers.FileReadState.PERMISSION_DENIED;
             }
             return View(viewModel);
         }
@@ -77,8 +74,7 @@ namespace Kontrol.Controllers
         public IActionResult ViewDirectory(string directoryPath = "")
         {
             var viewModel = new Kontrol.ViewModels.ViewDirectory();
-            viewModel.directoryFound = false;
-            viewModel.directoryAccessible = false;
+            viewModel.directoryReadState = Helpers.FileReadState.NOT_FOUND;
             viewModel.directoryPath = directoryPath;
             try
             {
@@ -92,15 +88,13 @@ namespace Kontrol.Controllers
                 {
                     viewModel.childDirectories.Add(directory);
                 }
-                viewModel.directoryFound = true;
+                viewModel.directoryReadState = Helpers.FileReadState.READ;
             }
-            catch (System.IO.FileNotFoundException)
-            {
-                viewModel.directoryFound = false;
-            }
+            catch (System.IO.FileNotFoundException) { }
+            catch (System.IO.DirectoryNotFoundException) { }
             catch (System.UnauthorizedAccessException)
             {
-                viewModel.directoryAccessible = false;
+                viewModel.directoryReadState = Helpers.FileReadState.PERMISSION_DENIED;
             }
             return View(viewModel);
         }

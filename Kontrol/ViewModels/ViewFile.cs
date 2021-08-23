@@ -7,9 +7,9 @@ namespace Kontrol.ViewModels
 {
     public struct ViewFile
     {
-        public bool fileFound;
-        public bool fileAccessible;
+        public Helpers.FileReadState fileReadState;
+        public Helpers.FileType fileType;
         public string filePath;
-        public string fileContent;
+        public byte[] fileContent;
     }
 }

@@ -5,28 +5,53 @@
 
 <div class="text-center">
     <h1 class="display-4">View File</h1>
-    @if (Model.fileFound)
+    @switch (Model.fileReadState)
     {
-        <h2>@Model.filePath</h2>
-        <i class="fas fa-level-up-alt"></i>
-        <a asp-action="ViewParentDirectory" asp-route-path="@Model.filePath">View parent directory</a>
-        <br />
-        <br />
-        <p class="raw-text">@Model.fileContent</p>
-    }
-    else if (Model.filePath.Length > 0)
-    {
-        <p>@Model.filePath was not found</p>
-        <a href="javascript:history.back()">Go back</a>
-    }
-    else if (!Model.fileAccessible)
-    {
-        <p>Insufficient permissions to view this file</p>
-        <a href="javascript:history.back()">Go back</a>
-    }
-    else
-    {
-        <p>No file entered</p>
-        <a href="javascript:history.back()">Go back</a>
+        case Kontrol.Helpers.FileReadState.READ:
+            <h2>@Model.filePath</h2>
+            <i class="fas fa-level-up-alt"></i>
+            <a asp-action="ViewParentDirectory" asp-route-path="@Model.filePath">View parent directory</a>
+            <br />
+            <br />
+            @switch (Model.fileType)
+            {
+                case Kontrol.Helpers.FileType.Text:
+                    <p class="raw-text">@System.Text.Encoding.UTF8.GetString(Model.fileContent);</p>
+                    break;
+                case Kontrol.Helpers.FileType.JPG:
+                case Kontrol.Helpers.FileType.PNG:
+                    <img class="file-display-image"
+                         src="@Kontrol.Helpers.FileHelpers.Base64EncodeFile(Model.fileType, Model.fileContent)" />
+                    break;
+                case Kontrol.Helpers.FileType.MOV:
+                case Kontrol.Helpers.FileType.MP4:
+                    <video class="file-display-video" controls
+                           src="@Kontrol.Helpers.FileHelpers.Base64EncodeFile(Model.fileType, Model.fileContent)">
+                    </video>
+                    break;
+                case Kontrol.Helpers.FileType.MKV:
+                case Kontrol.Helpers.FileType.AVI:
+                case Kontrol.Helpers.FileType.WMV:
+                    <p>This file type cannot be played by this web browser</p>
+                    break;
+            }
+            break;
+
+        case Kontrol.Helpers.FileReadState.PERMISSION_DENIED:
+            <p>Insufficient permissions to view this file</p>
+            <a href="javascript:history.back()">Go back</a>
+            break;
+
+        case Kontrol.Helpers.FileReadState.NOT_FOUND:
+            @if (Model.filePath.Length > 0)
+            {
+                <p>@Model.filePath was not found</p>
+            }
+            else
+            {
+                <p>No file was entered</p>
+            }
+            <a href="javascript:history.back()">Go back</a>
+            break;
     }
 </div>

@@ -5,49 +5,53 @@
 
 <div class="text-center">
     <h1 class="display-4">View Directory</h1>
-    @if (Model.directoryFound)
+    @switch (Model.directoryReadState)
     {
-        <h2>@Model.directoryPath</h2>
-        <br />
-        <div class="directoryItemHolder">
-            <i class="fas fa-level-up-alt"></i>
-            <a asp-action="ViewParentDirectory" asp-route-path="@Model.directoryPath">View parent directory</a>
+        case Kontrol.Helpers.FileReadState.READ:
+            <h2>@Model.directoryPath</h2>
             <br />
-        </div>
-        @foreach (var directory in Model.childDirectories)
-        {
             <div class="directoryItemHolder">
-                <i class="fas fa-folder"></i>
-                <a asp-action="ViewDirectory" asp-route-directoryPath="@directory">
-                    @System.IO.Path.GetFileName(directory)
-                </a>
+                <i class="fas fa-level-up-alt"></i>
+                <a asp-action="ViewParentDirectory" asp-route-path="@Model.directoryPath">View parent directory</a>
                 <br />
             </div>
-        }
-        @foreach (var file in Model.childFiles)
-        {
-            <div class="directoryItemHolder">
-                <i class="fas fa-file"></i>
-                <a asp-action="ViewFile" asp-route-filePath="@file">
-                    @System.IO.Path.GetFileName(file)
-                </a>
-                <br />
-            </div>
-        }
-    }
-    else if (Model.directoryPath.Length > 0)
-    {
-        <p>@Model.directoryPath was not found</p>
-        <a href="javascript:history.back()">Go back</a>
-    }
-    else if (!Model.directoryAccessible)
-    {
-        <p>Insufficient permissions to view this directory</p>
-        <a href="javascript:history.back()">Go back</a>
-    }
-    else
-    {
-        <p>No file entered</p>
-        <a href="javascript:history.back()">Go back</a>
+            @foreach (var directory in Model.childDirectories)
+            {
+                <div class="directoryItemHolder">
+                    <i class="fas fa-folder"></i>
+                    <a asp-action="ViewDirectory" asp-route-directoryPath="@directory">
+                        @System.IO.Path.GetFileName(directory)
+                    </a>
+                    <br />
+                </div>
+            }
+            @foreach (var file in Model.childFiles)
+            {
+                <div class="directoryItemHolder">
+                    <i class="fas fa-file"></i>
+                    <a asp-action="ViewFile" asp-route-filePath="@file">
+                        @System.IO.Path.GetFileName(file)
+                    </a>
+                    <br />
+                </div>
+            }
+            break;
+
+        case Kontrol.Helpers.FileReadState.PERMISSION_DENIED:
+            <p>Insufficient permissions to view this directory</p>
+            <a href="javascript:history.back()">Go back</a>
+            break;
+
+        case Kontrol.Helpers.FileReadState.NOT_FOUND:
+            @if (Model.directoryPath.Length > 0)
+            {
+                <p>@Model.directoryPath was not found</p>
+            }
+            else
+            {
+                <p>No file was entered</p>
+            }
+            <a href="javascript:history.back()">Go back</a>
+            break;
     }
 </div>
