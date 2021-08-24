@@ -52,7 +52,6 @@ namespace Kontrol.Helpers
             if (extension == null) return FileType.Text;
             try
             {
-                Console.WriteLine(extension);
                 return extensionToFileType[extension];
             }
             catch (KeyNotFoundException)

@@ -99,6 +99,21 @@ namespace Kontrol.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditFile(string filePath, string fileContent)
+        {
+            // Write to a text file
+            try
+            {
+                await System.IO.File.WriteAllTextAsync(filePath, fileContent);
+            }
+            catch
+            {
+                // pass
+            }
+            return RedirectToAction(nameof(ViewFile), new { filePath = filePath });
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

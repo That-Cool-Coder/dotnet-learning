@@ -16,7 +16,24 @@
             @switch (Model.fileType)
             {
                 case Kontrol.Helpers.FileType.Text:
-                    <p class="raw-text">@System.Text.Encoding.UTF8.GetString(Model.fileContent);</p>
+                    <form asp-route-filePath="@Model.filePath" asp-action="EditFile">
+                        <input type="submit" class="file-save-button btn btn-primary"
+                            value="Save changes to file">
+                        <!-- Contenteditable divs (the best option for making this editor)
+                            Can't be used as form elements. To fix this, there is an invisible
+                            textarea that mirrors the div and is actually used in form submission -->
+                        <div id="editTextDiv" class="raw-text-area" role="textbox" spellcheck="false"
+                             onkeyup="updateHiddenTextArea()"
+                             contenteditable>@System.Text.Encoding.UTF8.GetString(Model.fileContent)</div>
+                        <textarea name="fileContent" id="hiddenEditTextArea" hidden></textarea>
+                        <script>
+                            function updateHiddenTextArea() {
+                                document.getElementById('hiddenEditTextArea').value =
+                                    document.getElementById('editTextDiv').innerText;
+                            }
+                            updateHiddenTextArea();
+                        </script>
+                    </form>
                     break;
                 case Kontrol.Helpers.FileType.JPG:
                 case Kontrol.Helpers.FileType.PNG:
